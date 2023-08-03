@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { Card, Form, Container, Navbar, Button, Stack } from 'react-bootstrap';
-
+import { NewTodoForm } from './NewTodoForm';
 export default function App() {
-  const [newItem, setNewItem] = useState("")
+
   const [todoList, setTodoList] = useState([])
-  function handleSubmit(e) {
-    e.preventDefault()
+
+  function addTodo(title){
     setTodoList(currentTodoList => {
       return [
-        ...currentTodoList, { id: crypto.randomUUID(), title: newItem, completed: false }
+        ...currentTodoList, { id: crypto.randomUUID(), title, completed: false }
       ]
     })
-    setNewItem("")
   }
   function toggleTodo(id, completed) {
     setTodoList(currentTodoList => {
@@ -38,24 +37,7 @@ export default function App() {
             <Navbar.Brand style={{ fontSize: '25px', fontWeight: 'bold' }}>Todo App</Navbar.Brand>
           </Container>
         </Navbar>
-
-        <div className='container w-75 py-5 ms-4' style={{ maxWidth: '600px' }}>
-          <Card className='bg-light'>
-            <Card.Body>
-              <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="textInput">
-                  <Stack gap={3}>
-                    <Form.Label className="text-left w-100 h5">Add New Item</Form.Label>
-                    <Form.Control type="text" value={newItem} onChange={e => setNewItem(e.target.value)} placeholder="Enter Todo" />
-                    <Button variant="primary form-control" type="submit" className='w-50 ms-auto'>
-                      Add
-                    </Button>
-                  </Stack>
-                </Form.Group>
-              </Form>
-            </Card.Body>
-          </Card >
-        </div>
+<NewTodoForm onSubmit={addTodo}/>
         <div>
           <div>
             <Form className='container w-75 ms-4' style={{ maxWidth: '600px' }}>

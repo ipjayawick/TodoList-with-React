@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Card, Form, Container, Navbar, Button, Stack } from 'react-bootstrap';
+import { Card, Form,Button, Stack } from 'react-bootstrap';
 
-export function NewTodoForm(props){
+export function NewTodoForm({onSubmit}){
     const [newItem, setNewItem] = useState("")
 
     function handleSubmit(e) {
         e.preventDefault()
         if(newItem==="") return
-        props.onSubmit(newItem)            //this gives addTodo function
+        onSubmit(newItem)            //this gives addTodo function
         setNewItem("")
       }
       return(

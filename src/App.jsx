@@ -1,10 +1,19 @@
 import { Container, Navbar } from 'react-bootstrap';
 import { NewTodoForm } from './NewTodoForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TodoList } from './TodoList';
 
 export default function App() {
-  const [todoList, setTodoList] = useState([])
+  const [todoList, setTodoList] = useState(()=>{
+    const localValue=localStorage.getItem("ITEMS")
+    if(localValue==null) return []
+    return JSON.parse(localValue)
+  })
+
+  useEffect(() => {
+    localStorage.setItem("ITEMS",JSON.stringify(todoList))
+  }, [todoList])
+
   function addTodo(title) {
     setTodoList(currentTodoList => {
       return [
@@ -38,7 +47,7 @@ export default function App() {
           </Container>
         </Navbar>
         <NewTodoForm onSubmit={addTodo} />
-        <TodoList todoList={todoList} toggleTodo={toggleTodo} deleteTodo={deleteTodo}/>
+        <TodoList todoList={todoList} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
       </Container>
     </>
   );
